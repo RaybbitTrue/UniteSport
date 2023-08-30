@@ -1,0 +1,556 @@
+WindowManager:
+    Container1:
+    Container2:
+    Container3:
+    Container4:
+    Container5:
+
+<ButtonSize150@Button>:         #имя дочернего класса (собачка) имя класса
+    #size: 150, 150              #настройки, которые будут базово в дочернем классе
+    #size_hint: None, None
+    size_hint: 0.277, 0.138
+
+<ButtonSize100@Button>:
+    #size: 100, 100
+    #size_hint: None, None
+    size_hint: 0.1851, 0.0925
+
+#<ButtonSize500@Button>:
+#    size: 490, 90
+#    font_size: 30
+#    font_name: 'Ponter X.ttf'
+#    size_hint: None, None
+#    pos_hint: { 'center_x': 0.5, 'center_y': 0.8}
+#    background_normal: 'images/img_new_zam.png'
+#    on_release:
+#        app.root.manager.transition.direction = 'right'
+#        app.root.manager.current = "Container4"
+
+
+#Гланый экран-----------------------------------------------------------------------------------------------------------
+<Container1>:
+    name: 'Container1'
+    rows: 3                                                 #колличество строк
+
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        RelativeLayout:
+            ButtonSize150:
+                #секундомер
+                #disabled: True                             # вкл/вкл кнопка
+                #opacity: 0                                 # непрозрачность кнопки
+                #size: 150, 150                             # задаёт размеры в пикселях
+                #size_hint: None, None                      # даёт работать size
+                #size_hint: 0.25, 0.25                      # настройка размера в %
+                pos_hint: { 'x': 0.35, 'center_y': 0.7}     # настройка позиции в % относительно левого нижнего края
+                #background_color: (0, 255, 255, 0.9)       # цвет кнопки в RGB
+                #text: 'Секундомер'                         # настройка текста
+                #font_size: 40                              # настройка размера шрифта
+                #font_name: 'Fulbo.otf'                     # шрифт
+                background_normal: 'images/img_time.png'           #изображение на кнопку
+                on_release:
+                    root.manager.transition.direction = 'left'
+                    root.manager.current = "Container2"
+
+
+            ButtonSize150:
+                #калькулятор
+                #size_hint: 0.2, 0.2
+                pos_hint: { 'x': 0.35, 'center_y': 0.5}
+                background_normal: 'images/img_calc.png'
+
+                on_release:
+                    root.manager.transition.direction = 'left'
+                    root.manager.current = "Container3"
+
+            ButtonSize150:
+                #заметки
+                #size_hint: 0.2, 0.2
+                pos_hint: { 'x': 0.35, 'center_y': 0.3}
+                background_normal: 'images/img_write.png'
+
+                on_release:
+                    root.manager.transition.direction = 'left'  #направление сдвига экрана
+                    root.manager.current = "Container4"         #перемещение на определённый экран заданный в ".py"
+
+#Секундомер-------------------------------------------------------------------------------------------------------------
+<Container2>:
+    name: 'Container2'
+    rows: 3
+    id: stopwatch
+    timer_display: output
+    start_button: start
+    stop_button: stop
+    restart_button: restart
+
+
+    FloatLayout:
+        cols: 2
+
+        ButtonSize100:
+            #кнопка на лево
+            pos_hint: { 'center_x': 0.125, 'center_y': 0.9375}
+            background_normal: 'images/img_left.png'
+
+            on_release:
+                root.manager.transition.direction = 'right'
+                root.manager.current = "Container4"
+
+        ButtonSize100:
+            #кнопка меню
+            pos_hint: { 'center_x': 0.5, 'center_y': 0.9375}
+            background_normal: 'images/img_menu.png'
+
+            on_release:
+                root.manager.transition.direction = 'right'
+                root.manager.current = "Container1"
+
+        ButtonSize100:
+            #кнопка на право
+            pos_hint: { 'center_x': 0.875, 'center_y': 0.9375}
+            background_normal: 'images/img_right.png'
+
+            on_release:
+                root.manager.transition.direction = 'left'
+                root.manager.current = "Container3"
+
+        FloatLayout:
+            pos_hint: { 'center_x': 0.5, 'center_y': 0.525}
+
+            Label:
+                #таймер
+                id: output
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.49}
+                text: '00:00'
+                font_size: 120
+                font_name: 'Ponter X.ttf'
+
+            Image:
+                #рамка таймера
+                source: 'images/img_time0000.png'
+                #size: 392, 206
+                #size_hint: None, None
+                size_hint: 0.725, 0.1907
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.5}
+
+            ButtonSize100:
+                #кнопка старт
+                id: start
+                pos_hint: { 'center_x': 0.225, 'center_y': 0.325}
+                background_normal: 'images/img_start.png'
+                background_color: (43, 43, 43, 1)
+                on_release:
+                    stopwatch.Start_The_Clock()
+
+
+
+            ButtonSize100:
+                #кнопка стоп
+                id: stop
+                disabled: True
+                opacity: 0
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.325}
+                background_normal: 'images/img_stop.png'
+                on_release:
+                    stopwatch.Stop_The_Clock()
+
+            ButtonSize100:
+                #кнопка перезапуск
+                id: restart
+                pos_hint: { 'center_x': 0.775, 'center_y': 0.325}
+                background_normal: 'images/img_reload.png'
+                on_release:
+                    stopwatch.Restart_The_Clock()
+
+#Калькулятор------------------------------------------------------------------------------------------------------------
+<Container3>:
+    name: 'Container3'
+    rows: 3
+
+    id: calculator
+    display: entry
+
+
+    FloatLayout:
+        cols: 2
+
+        ButtonSize100:
+            #кнопка на лево
+            pos_hint: { 'center_x': 0.125, 'center_y': 0.9375}
+            background_normal: 'images/img_left.png'
+
+            on_release:
+                root.manager.transition.direction = 'right'
+                root.manager.current = "Container2"
+
+        ButtonSize100:
+            #кнопка меню
+            pos_hint: { 'center_x': 0.5, 'center_y': 0.9375}
+            background_normal: 'images/img_menu.png'
+
+            on_release:
+                root.manager.transition.direction = 'right'
+                root.manager.current = "Container1"
+
+        ButtonSize100:
+            #кнопка на право
+            pos_hint: { 'center_x': 0.875, 'center_y': 0.9375}
+            background_normal: 'images/img_right.png'
+
+            on_release:
+                root.manager.transition.direction = 'left'
+                root.manager.current = "Container4"
+
+        FloatLayout:
+            pos_hint: { 'center_x': 0.5, 'center_y': 0.5}
+
+            TextInput:
+                #ввод калькулятора
+                id: entry
+                #size: 422, 135
+                #size_hint: None, None
+                size_hint: 0.7814, 0.125
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.75}
+                text: ''
+                color: 0, 255, 255, 1
+                font_size: 50
+                font_name: 'Ponter X.ttf'
+
+
+            Image:
+                #рамка калькулятора
+                source: 'images/img_calculate.png'
+                #size: 442, 156
+                #size_hint: None, None
+                size_hint: 0.8185, 0.1444
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.75}
+
+            ButtonSize100:
+                #кнопка 1
+                text: "1"
+                font_size: 1
+                pos_hint: { 'center_x': 0.2, 'center_y': 0.625}
+                background_normal: 'images/img_1.png'
+                on_release:
+                    entry.text += self.text
+
+
+            ButtonSize100:
+                #кнопка 2
+                text: "2"
+                font_size: 1
+                pos_hint: { 'center_x': 0.4, 'center_y': 0.625}
+                background_normal: 'images/img_2.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                #кнопка 3
+                text: "3"
+                font_size: 1
+                pos_hint: { 'center_x': 0.6, 'center_y': 0.625}
+                background_normal: 'images/img_3.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                #кнопка умножить
+                text: "*"
+                font_size: 1
+                pos_hint: { 'center_x': 0.8, 'center_y': 0.625}
+                background_normal: 'images/img_umn.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                #кнопка 4
+                text: "4"
+                font_size: 1
+                pos_hint: { 'center_x': 0.2, 'center_y': 0.525}
+                background_normal: 'images/img_4.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                #кнопка 5
+                text: "5"
+                font_size: 1
+                pos_hint: { 'center_x': 0.4, 'center_y': 0.525}
+                background_normal: 'images/img_5.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                #кнопка 6
+                text: "6"
+                font_size: 1
+                pos_hint: { 'center_x': 0.6, 'center_y': 0.525}
+                background_normal: 'images/img_6.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                #кнопка разделить
+                text: "/"
+                font_size: 1
+                pos_hint: { 'center_x': 0.8, 'center_y': 0.525}
+                background_normal: 'images/img_del.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                #кнопка 7
+                text: "7"
+                font_size: 1
+                pos_hint: { 'center_x': 0.2, 'center_y': 0.425}
+                background_normal: 'images/img_7.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                #кнопка 8
+                text: "8"
+                font_size: 1
+                pos_hint: { 'center_x': 0.4, 'center_y': 0.425}
+                background_normal: 'images/img_8.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                #кнопка 9
+                text: "9"
+                font_size: 1
+                pos_hint: { 'center_x': 0.6, 'center_y': 0.425}
+                background_normal: 'images/img_9.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                #кнопка плюс
+                text: "+"
+                font_size: 1
+                pos_hint: { 'center_x': 0.8, 'center_y': 0.425}
+                background_normal: 'images/img_+.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                #кнопка 0
+                text: "0"
+                font_size: 1
+                pos_hint: { 'center_x': 0.2, 'center_y': 0.325}
+                background_normal: 'images/img_0.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                #кнопка (
+                text: "("
+                font_size: 1
+                pos_hint: { 'center_x': 0.4, 'center_y': 0.325}
+                background_normal: 'images/img_(.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                #кнопка )
+                text: ")"
+                font_size: 1
+                pos_hint: { 'center_x': 0.6, 'center_y': 0.325}
+                background_normal: 'images/img_).png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                #кнопка минус
+                text: "-"
+                font_size: 1
+                pos_hint: { 'center_x': 0.8, 'center_y': 0.325}
+                background_normal: 'images/img_-.png'
+                on_release:
+                    entry.text += self.text
+
+            Button:
+                #кнопка =
+                text: "="
+                font_size: 1
+                #size: 425, 102
+                #size_hint: None, None
+                size_hint: 0.787, 0.0944
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.225}
+                background_normal: 'images/img_=.png'
+                on_release:
+                    calculator.Calculate(entry.text)
+
+            Button:
+                #кнопка удалить
+                text: "."
+                font_size: 1
+                #size: 425, 102
+                #size_hint: None, None
+                size_hint: 0.787, 0.0944
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.125}
+                background_normal: 'images/img_delete.png'
+                on_release:
+                    entry.text = ""
+
+#Заметки----------------------------------------------------------------------------------------------------------------
+<Container4>:
+    name: 'Container4'
+    rows: 3
+    id: notes
+    display_notes: entry_notes
+    plus_notes: plus
+
+
+    FloatLayout:
+        #cols: 3
+
+        ButtonSize100:
+            #кнопка на лево
+            pos_hint: { 'center_x': 0.125, 'center_y': 0.9375}
+            background_normal: 'images/img_left.png'
+            on_release:
+                notes.Update_Note()
+                root.manager.transition.direction = 'right'
+                root.manager.current = "Container3"
+
+        ButtonSize100:
+            #кнопка меню
+            pos_hint: { 'center_x': 0.5, 'center_y': 0.9375}
+            background_normal: 'images/img_menu.png'
+            on_release:
+                notes.Update_Note()
+                root.manager.transition.direction = 'right'
+                root.manager.current = "Container1"
+
+        ButtonSize100:
+            #кнопка на право
+            pos_hint: { 'center_x': 0.875, 'center_y': 0.9375}
+            background_normal: 'images/img_right.png'
+            on_release:
+                notes.Update_Note()
+                root.manager.transition.direction = 'left'
+                root.manager.current = "Container2"
+
+        FloatLayout:
+            pos_hint: { 'center_x': 0.5, 'center_y': 0.52}
+
+            TextInput:
+                #ввод заметок
+                id: entry_notes
+                #size: 467, 727
+                #size_hint: None, None
+                size_hint: 0.8648, 0.6731
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.5}
+                #text: 'Суставная разминка'
+                color: 0, 255, 255, 1
+                font_size: 20
+                font_name: 'Ponter X.ttf'
+
+            Image:
+                #рамка заметок
+                source: 'images/img_zametki.png'
+                #size: 490, 750
+                #size_hint: None, None
+                size_hint: 0.9074, 0.6944
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.5}
+
+            ButtonSize100:
+                #кнопка добавить заметку или плюс
+                id: plus
+                pos_hint: { 'center_x': 0.15, 'center_y': 0.07}
+                background_normal: 'images/img_+_zam.png'
+                on_release:
+                    notes.Check_Display_Notes()
+
+            ButtonSize100:
+                #кнопка списка заметок
+                pos_hint: { 'center_x': 0.3825, 'center_y': 0.07}
+                background_normal: 'images/img_menu_zam.png'
+                on_release:
+                    notes.Update_Note()
+                    root.manager.transition.direction = 'right'
+                    root.manager.current = "Container5"
+
+            ButtonSize100:
+                #кнопка очистить поле ввода для создания заметки
+                pos_hint: { 'center_x': 0.6175, 'center_y': 0.07}
+                background_normal: 'images/img_x_zam.png'
+                on_release:
+                    notes.Clear_Display_Notes()
+
+            ButtonSize100:
+                #кнопка удалить заметку
+                pos_hint: { 'center_x': 0.85, 'center_y': 0.07}
+                background_normal: 'images/img_del_zam.png'
+                on_release:
+                    notes.Delete_Note()
+
+#Список-----------------------------------------------------------------------------------------------------------------
+<Container5>:
+    name: 'Container5'
+    rows: 3
+    id: notes_list
+    grid_notes_list: list
+
+
+
+    FloatLayout:
+        cols: 2
+
+        ButtonSize100:
+            #кнопка меню
+            pos_hint: { 'center_x': 0.5, 'center_y': 0.9375}
+            background_normal: 'images/img_menu.png'
+
+            on_release:
+                root.manager.transition.direction = 'right'
+                root.manager.current = "Container1"
+                notes_list.Remove_Buttons()
+
+        ButtonSize100:
+            #кнопка на право
+            pos_hint: { 'center_x': 0.875, 'center_y': 0.9375}
+            background_normal: 'images/img_right.png'
+
+            on_release:
+                root.manager.transition.direction = 'left'
+                root.manager.current = "Container4"
+                notes_list.Remove_Buttons()
+
+        ScrollView:
+            pos_hint: { 'center_x': 0.55, 'center_y': 0.3725}
+            do_scroll_x: False
+            do_scroll_y: True
+
+            GridLayout:
+                id: list
+                size_hint_y: None               #то, благодаря чему работает ScrollView
+                cols: 1                         #колличество столбцов
+                height: self.minimum_height     #то, благодаря чему работает ScrollView
+                spacing: 15                     #задаёт отступы между элементами
+
+#                Label:
+#                    #полоска рамки заметки
+#                    size: 490, 35
+#                    text: 'Заметки:'
+#                    font_size: 30
+#                    font_name: 'Ponter X.ttf'
+#                    size_hint: None, None
+#                    pos_hint: { 'center_x': 0.5, 'center_y': 0.8}
+#                    background_normal: 'img_new_zam.png'
+
+#                Button:
+#                    #полоска рамки заметки
+#                    size: 490, 90
+#                    text: 'Добавить кнопку'
+#                    font_size: 30
+#                    font_name: 'Ponter X.ttf'
+#                    size_hint: None, None
+#                    pos_hint: { 'center_x': 0.5, 'center_y': 0.8}
+#                    background_normal: 'img_new_zam.png'
+#
+#                    on_release:
+#                        notes_list.Cycle_for_add_notes()

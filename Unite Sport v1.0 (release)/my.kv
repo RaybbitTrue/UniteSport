@@ -1,0 +1,444 @@
+WindowManager:
+    Container1:
+    Container2:
+    Container3:
+    Container4:
+    Container5:
+
+<ButtonSize150@Button>:
+    size: 150, 150
+    size_hint: None, None
+
+<ButtonSize100@Button>:
+    size: 100, 100
+    size_hint: None, None
+
+<Container1>:
+    name: 'Container1'
+    rows: 3
+
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        RelativeLayout:
+            ButtonSize150:
+                pos_hint: { 'x': 0.35, 'center_y': 0.7}
+                background_normal: 'images/img_time.png'
+                on_release:
+                    root.manager.transition.direction = 'left'
+                    root.manager.current = "Container2"
+
+            ButtonSize150:
+                pos_hint: { 'x': 0.35, 'center_y': 0.5}
+                background_normal: 'images/img_calc.png'
+                on_release:
+                    root.manager.transition.direction = 'left'
+                    root.manager.current = "Container3"
+
+            ButtonSize150:
+                pos_hint: { 'x': 0.35, 'center_y': 0.3}
+                background_normal: 'images/img_write.png'
+                on_release:
+                    root.manager.transition.direction = 'left'
+                    root.manager.current = "Container4"
+
+<Container2>:
+    name: 'Container2'
+    rows: 3
+    id: stopwatch
+    timer_display: output
+    start_button: start
+    stop_button: stop
+    restart_button: restart
+
+    FloatLayout:
+        cols: 2
+
+        ButtonSize100:
+            pos_hint: { 'center_x': 0.125, 'center_y': 0.9375}
+            background_normal: 'images/img_left.png'
+            on_release:
+                root.manager.transition.direction = 'right'
+                root.manager.current = "Container4"
+
+        ButtonSize100:
+            pos_hint: { 'center_x': 0.5, 'center_y': 0.9375}
+            background_normal: 'images/img_menu.png'
+
+            on_release:
+                root.manager.transition.direction = 'right'
+                root.manager.current = "Container1"
+
+        ButtonSize100:
+            pos_hint: { 'center_x': 0.875, 'center_y': 0.9375}
+            background_normal: 'images/img_right.png'
+
+            on_release:
+                root.manager.transition.direction = 'left'
+                root.manager.current = "Container3"
+
+        FloatLayout:
+            pos_hint: { 'center_x': 0.5, 'center_y': 0.525}
+
+            Label:
+                id: output
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.49}
+                text: '00:00'
+                font_size: 120
+                font_name: 'Ponter X.ttf'
+
+            Image:
+                source: 'images/img_time0000.png'
+                size: 392, 206
+                size_hint: None, None
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.5}
+
+            ButtonSize100:
+                id: start
+                pos_hint: { 'center_x': 0.225, 'center_y': 0.325}
+                background_normal: 'images/img_start.png'
+                background_color: (43, 43, 43, 1)
+                on_release:
+                    stopwatch.Start_The_Clock()
+
+
+
+            ButtonSize100:
+                id: stop
+                disabled: True
+                opacity: 0
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.325}
+                background_normal: 'images/img_stop.png'
+                on_release:
+                    stopwatch.Stop_The_Clock()
+
+            ButtonSize100:
+                id: restart
+                pos_hint: { 'center_x': 0.775, 'center_y': 0.325}
+                background_normal: 'images/img_reload.png'
+                on_release:
+                    stopwatch.Restart_The_Clock()
+
+<Container3>:
+    name: 'Container3'
+    rows: 3
+
+    id: calculator
+    display: entry
+
+
+    FloatLayout:
+        cols: 2
+
+        ButtonSize100:
+            pos_hint: { 'center_x': 0.125, 'center_y': 0.9375}
+            background_normal: 'images/img_left.png'
+
+            on_release:
+                root.manager.transition.direction = 'right'
+                root.manager.current = "Container2"
+
+        ButtonSize100:
+            pos_hint: { 'center_x': 0.5, 'center_y': 0.9375}
+            background_normal: 'images/img_menu.png'
+
+            on_release:
+                root.manager.transition.direction = 'right'
+                root.manager.current = "Container1"
+
+        ButtonSize100:
+            pos_hint: { 'center_x': 0.875, 'center_y': 0.9375}
+            background_normal: 'images/img_right.png'
+
+            on_release:
+                root.manager.transition.direction = 'left'
+                root.manager.current = "Container4"
+
+        FloatLayout:
+            pos_hint: { 'center_x': 0.5, 'center_y': 0.5}
+
+            TextInput:
+                id: entry
+                size: 422, 135
+                size_hint: None, None
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.75}
+                text: ''
+                color: 0, 255, 255, 1
+                font_size: 50
+                font_name: 'InterTight-Italic.ttf'
+
+
+            Image:
+                source: 'images/img_calculate.png'
+                size: 442, 156
+                size_hint: None, None
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.75}
+
+            ButtonSize100:
+                text: "1"
+                font_size: 1
+                pos_hint: { 'center_x': 0.2, 'center_y': 0.625}
+                background_normal: 'images/img_1.png'
+                on_release:
+                    entry.text += self.text
+
+
+            ButtonSize100:
+                text: "2"
+                font_size: 1
+                pos_hint: { 'center_x': 0.4, 'center_y': 0.625}
+                background_normal: 'images/img_2.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                text: "3"
+                font_size: 1
+                pos_hint: { 'center_x': 0.6, 'center_y': 0.625}
+                background_normal: 'images/img_3.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                text: "*"
+                font_size: 1
+                pos_hint: { 'center_x': 0.8, 'center_y': 0.625}
+                background_normal: 'images/img_umn.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                text: "4"
+                font_size: 1
+                pos_hint: { 'center_x': 0.2, 'center_y': 0.525}
+                background_normal: 'images/img_4.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                text: "5"
+                font_size: 1
+                pos_hint: { 'center_x': 0.4, 'center_y': 0.525}
+                background_normal: 'images/img_5.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                text: "6"
+                font_size: 1
+                pos_hint: { 'center_x': 0.6, 'center_y': 0.525}
+                background_normal: 'images/img_6.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                text: "/"
+                font_size: 1
+                pos_hint: { 'center_x': 0.8, 'center_y': 0.525}
+                background_normal: 'images/img_del.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                text: "7"
+                font_size: 1
+                pos_hint: { 'center_x': 0.2, 'center_y': 0.425}
+                background_normal: 'images/img_7.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                text: "8"
+                font_size: 1
+                pos_hint: { 'center_x': 0.4, 'center_y': 0.425}
+                background_normal: 'images/img_8.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                text: "9"
+                font_size: 1
+                pos_hint: { 'center_x': 0.6, 'center_y': 0.425}
+                background_normal: 'images/img_9.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                text: "+"
+                font_size: 1
+                pos_hint: { 'center_x': 0.8, 'center_y': 0.425}
+                background_normal: 'images/img_+.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                text: "0"
+                font_size: 1
+                pos_hint: { 'center_x': 0.2, 'center_y': 0.325}
+                background_normal: 'images/img_0.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                text: "("
+                font_size: 1
+                pos_hint: { 'center_x': 0.4, 'center_y': 0.325}
+                background_normal: 'images/img_(.png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                text: ")"
+                font_size: 1
+                pos_hint: { 'center_x': 0.6, 'center_y': 0.325}
+                background_normal: 'images/img_).png'
+                on_release:
+                    entry.text += self.text
+
+            ButtonSize100:
+                text: "-"
+                font_size: 1
+                pos_hint: { 'center_x': 0.8, 'center_y': 0.325}
+                background_normal: 'images/img_-.png'
+                on_release:
+                    entry.text += self.text
+
+            Button:
+                text: "="
+                font_size: 1
+                size: 425, 102
+                size_hint: None, None
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.225}
+                background_normal: 'images/img_=.png'
+                on_release:
+                    calculator.Calculate(entry.text)
+
+            Button:
+                text: "."
+                font_size: 1
+                size: 425, 102
+                size_hint: None, None
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.125}
+                background_normal: 'images/img_delete.png'
+                on_release:
+                    entry.text = ""
+
+<Container4>:
+    name: 'Container4'
+    rows: 3
+    id: notes
+    display_notes: entry_notes
+    plus_notes: plus
+
+
+    FloatLayout:
+
+        ButtonSize100:
+            pos_hint: { 'center_x': 0.125, 'center_y': 0.9375}
+            background_normal: 'images/img_left.png'
+            on_release:
+                notes.Update_Note()
+                root.manager.transition.direction = 'right'
+                root.manager.current = "Container3"
+
+        ButtonSize100:
+            pos_hint: { 'center_x': 0.5, 'center_y': 0.9375}
+            background_normal: 'images/img_menu.png'
+            on_release:
+                notes.Update_Note()
+                root.manager.transition.direction = 'right'
+                root.manager.current = "Container1"
+
+        ButtonSize100:
+            pos_hint: { 'center_x': 0.875, 'center_y': 0.9375}
+            background_normal: 'images/img_right.png'
+            on_release:
+                notes.Update_Note()
+                root.manager.transition.direction = 'left'
+                root.manager.current = "Container2"
+
+        FloatLayout:
+            pos_hint: { 'center_x': 0.5, 'center_y': 0.52}
+
+            TextInput:
+                id: entry_notes
+                size: 467, 727
+                size_hint: None, None
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.5}
+                color: 0, 255, 255, 1
+                font_size: 28
+                font_name: 'InterTight-Italic.ttf'
+
+            Image:
+                source: 'images/img_zametki.png'
+                size: 490, 750
+                size_hint: None, None
+                pos_hint: { 'center_x': 0.5, 'center_y': 0.5}
+
+            ButtonSize100:
+                id: plus
+                pos_hint: { 'center_x': 0.15, 'center_y': 0.07}
+                background_normal: 'images/img_+_zam.png'
+                on_release:
+                    notes.Check_Display_Notes()
+
+            ButtonSize100:
+                pos_hint: { 'center_x': 0.3825, 'center_y': 0.07}
+                background_normal: 'images/img_menu_zam.png'
+                on_release:
+                    notes.Update_Note()
+                    root.manager.transition.direction = 'right'
+                    root.manager.current = "Container5"
+
+            ButtonSize100:
+                pos_hint: { 'center_x': 0.6175, 'center_y': 0.07}
+                background_normal: 'images/img_x_zam.png'
+                on_release:
+                    notes.Clear_Display_Notes()
+
+            ButtonSize100:
+                pos_hint: { 'center_x': 0.85, 'center_y': 0.07}
+                background_normal: 'images/img_del_zam.png'
+                on_release:
+                    notes.Delete_Note()
+
+<Container5>:
+    name: 'Container5'
+    rows: 3
+    id: notes_list
+    grid_notes_list: list
+
+
+
+    FloatLayout:
+        cols: 2
+
+        ButtonSize100:
+            pos_hint: { 'center_x': 0.5, 'center_y': 0.9375}
+            background_normal: 'images/img_menu.png'
+
+            on_release:
+                root.manager.transition.direction = 'right'
+                root.manager.current = "Container1"
+                notes_list.Remove_Buttons()
+
+        ButtonSize100:
+            pos_hint: { 'center_x': 0.875, 'center_y': 0.9375}
+            background_normal: 'images/img_right.png'
+
+            on_release:
+                root.manager.transition.direction = 'left'
+                root.manager.current = "Container4"
+                notes_list.Remove_Buttons()
+
+        ScrollView:
+            pos_hint: { 'center_x': 0.55, 'center_y': 0.3725}
+            do_scroll_x: False
+            do_scroll_y: True
+
+            GridLayout:
+                id: list
+                size_hint_y: None
+                cols: 1
+                height: self.minimum_height
+                spacing: 15
